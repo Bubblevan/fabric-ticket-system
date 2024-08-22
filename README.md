@@ -1,0 +1,2 @@
+# fabric-ticket-system
+一个通过hyperledger fabric来对亚运比赛的票务交易进行安全加密的前后端分离开发项目
