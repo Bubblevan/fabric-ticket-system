@@ -58,7 +58,7 @@
           });
           if (response.data.code === 0) { // 成功
             alert(response.data.msg);
-            this.router.push('/login');
+            this.router.push('/');
           } else { // 失败
             alert(response.data.msg);
           }

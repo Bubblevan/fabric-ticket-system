@@ -10,7 +10,7 @@
             <el-input v-model="user.email" disabled></el-input>
           </el-form-item>
           <el-form-item label="全名">
-            <el-input v-model="user.fullName" disabled></el-input>
+            <el-input v-model="user.fullName" enabled></el-input>
           </el-form-item>
           <el-form-item label="角色">
             <el-input v-model="user.roleText" disabled></el-input>

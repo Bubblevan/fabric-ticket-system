@@ -7,17 +7,17 @@
             <el-icon><home-filled /></el-icon>
             <span slot="title">首页</span>
           </el-menu-item>
-          <el-sub-menu index="1">
+          <el-sub-menu index="1" v-if="userRole">
             <template #title>
               <el-icon><calendar /></el-icon>比赛管理
             </template>
             <el-menu-item-group title="">
               <el-menu-item index="/events">比赛列表</el-menu-item>
               <el-menu-item index="/events/create">创建比赛</el-menu-item>
-              <el-menu-item index="/blockchain-explorer">浏览器</el-menu-item>
+              <!-- <el-menu-item index="/blockchain-explorer">浏览器</el-menu-item> -->
             </el-menu-item-group>
           </el-sub-menu>
-          <el-sub-menu index="2">
+          <el-sub-menu index="2" v-if="userRole">
             <template #title>
               <el-icon><user /></el-icon>用户管理
             </template>
@@ -54,6 +54,7 @@
 <script>
 import { HomeFilled, Calendar, Ticket, User, Setting } from '@element-plus/icons-vue';
 import Breadcrumb from '@/components/Breadcrumb.vue';
+import axios from 'axios';
 
 export default {
   components: {
@@ -64,13 +65,32 @@ export default {
     User,
     Setting
   },
+  data() {
+    return {
+      userRole: true // 默认值为true，实际值会在mounted中更新
+    };
+  },
   methods: {
     handleSelect(key, keyPath) {
       this.$router.push(key);
     },
     logout() {
       // 注销逻辑
+    },
+    async fetchUserProfile() {
+      try {
+        const response = await axios.get('http://localhost:8080/profile');
+        if (response.data.code === 0) {
+          this.userRole = response.data.data.Role;
+          console.log(this.userRole);
+        }
+      } catch (error) {
+        console.error('获取用户信息失败', error);
+      }
     }
+  },
+  mounted() {
+    this.fetchUserProfile();
   }
 };
 </script>
